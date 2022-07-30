@@ -1,144 +1,150 @@
+import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-
-/*
-const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-const [cards, setCards] = React.useState([]);
-const [selectedCard, setSelectedCard] = React.useState("");
-
-function closeAllPopups(){
-  setEditProfilePopupOpen(false);
-  setEditProfilePopupOpen(false);
-  setEditProfilePopupOpen(false);
-}
-
-
-
-function closeImagePopup(){
-  setSelectedCard("");
-}
-
-function openEditProfile(){
-  setEditProfilePopupOpen(!isEditProfilePopupOpen);
-}
-
-function openAddPlace(){
-  setAddPlacePopupOpen(!isAddPlacePopupOpen);
-}
-
-function openEditAvatarPicture(){
-  setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
-}
-
-function handleCardClick(){
-  setSelectedCard(this);
-}
-
-React.useEffect(()=> {
-  api.getInitialCards().then(res) => {
-    setCards(res);
-  });
-}, []};
-
-
-*/
-
-
-/* in App():
-<ImagePopup card={selectedCard} onClose={closeImagePopup} />
-<PopupWithForm 
-name = "editAvatar"
-
-
-
-
-*/
-
-
+import PopupWithForm from "./PopupWithForm.js";
+import ImagePopup from "./ImagePopup";
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
+
+  const [selectedCard, setSelectedCard] = React.useState({
+    name: "",
+    link: "",
+  });
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] =
+    React.useState(false);
+
+  function handleEditProfileClick() {
+    console.log("handleEditProfileClick() was called");
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+  }
+
+  function handleCardClick(data) {
+    setIsImagePopupOpen(true);
+    setSelectedCard({ name: data.name, link: data.link });
+  }
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
+  }
+
   return (
-    <>
-
-
-
-
-    <div className="page">
+    <div>
       <Header />
-      <Main />
+      <Main
+        handleEditProfileClick={handleEditProfileClick}
+        handleEditAvatarClick={handleEditAvatarClick}
+        handleAddPlaceClick={handleAddPlaceClick}
+        onCardClick={handleCardClick}
+      />
       <Footer />
-
-      
-
-      
-
-      <div className="popup-box popup-box_image">
-        <div className="popup-box__image-container">
-          <button type="button" className="popup-box__close-btn"></button>
-          <img className="popup-box__image" />
-          <p className="popup-box__caption"></p>
-        </div>
-      </div>
-
-      <template id="template-element">
-        <div className="element">
-          <button className="element__delete-icon"></button>
-          <img src="#" className="element__image" alt="#" />
-          <div className="element__info">
-            <h2 className="element__paragraph"></h2>
-            <div className="element__info-like">
-              <button type="button" className="element__like"></button>
-              <span className="element__like_number">0</span>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <div className="popup-box popup-box_delete">
-        <div className="popup-box__container">
-          <form className="form form_delete">
-            <button className="popup-box__close-btn" type="button"></button>
-            <h2 className="popup-box-title">Are you sure?</h2>
-            <button type="submit" className="form__save-btn">
-              Yes
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="popup-box popup-box_avatar">
-        <div className="popup-box__container">
-          <h2 className="popup-box-title popup-box-title_avatar">
-            Change profile picture
-          </h2>
-          <form name="form-avatar" className="form form-avatar" noValidate>
-            <fieldset className="form__set">
-              <button className="popup-box__close-btn" type="button"></button>
-              <input
-                type="url"
-                className="form__input form__input_avatar"
-                id="avatar"
-                name="avatar"
-                placeholder="profile picture link"
-                required
-              />
-              <span className="avatar-error form__input-error"></span>
-
-              <button
-                type="submit"
-                className="form__button-save form__save-btn_avatar form__save-btn"
-              >
-                Save
-              </button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm
+        title="Edit profile"
+        name="profile"
+        buttonText="Save"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type="text"
+          className="form__input form__input_type_name"
+          id="name"
+          name="name"
+          placeholder=" Name"
+          required
+          minLength="2"
+          maxLength="40"
+        />
+        <span className="form__input-error name-error"></span>
+        <input
+          type="text"
+          className="form__input form__input_type_job"
+          id="about-me"
+          name="about-me"
+          placeholder=" About me"
+          required
+          minLength="2"
+          maxLength="200"
+        />
+        <span className="form__input-error job-error"></span>
+      </PopupWithForm>
+      <PopupWithForm
+        title="New place"
+        name="cards"
+        buttonText="Create"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type="text"
+          className="form__input form__input_type_title"
+          id="place-title"
+          name="place-title"
+          placeholder=" Title"
+          required
+          minLength="1"
+          maxLength="300"
+        />
+        <span className="form__input-error title-error"></span>
+        <input
+          type="url"
+          className="form__input form__input_type_image-link"
+          id="image"
+          name="image"
+          placeholder=" Image link"
+          required
+        />
+        <span className="form__input-error image-link-error"></span>
+      </PopupWithForm>
+      <PopupWithForm
+        title="Change profile picture"
+        name="avatar"
+        buttonText="Save"
+        mod="form__save-btn_avatar"
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
+        <input
+          type="url"
+          className="form__input form__input_type_avatar"
+          id="avatar"
+          name="avatar"
+          placeholder="profile picture link"
+          required
+        />
+        <span className="form__input-error avatar-error"></span>
+      </PopupWithForm>
+      <PopupWithForm
+        title="Are you sure?"
+        name="delete"
+        buttonText="Yes"
+        mod="form__save-btn"
+        isOpen={isDeleteCardPopupOpen}
+      ></PopupWithForm>
+      <ImagePopup
+        selectedCard={selectedCard}
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
+      />
     </div>
-    </>);
+  );
 }
 
 export default App;

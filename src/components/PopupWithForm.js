@@ -1,46 +1,48 @@
 import React from "react";
 
-function PopupWithForm(){
+// v - updated
+// change popup-box__edit-profile later
+// className="form popup__form" changed to className={`form form-${props.name}`}
+// className={`form__save-btn form__submit ${props.mod}`}
 
-return 
-<>
+function PopupWithForm(props) {
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
 
-<div className="popup-box popup-box_add">
-        <div className="popup-box__container">
-          <h2 className="popup-box__edit-profile">New place</h2>
-          <button type="button" className="popup-box__close-btn"></button>
-          <form className="form form-add" name="add-form" novalidate>
-            <fieldset className="form__set">
-              <input
-                type="text"
-                name="title"
-                placeholder=" Title"
-                className="form__input form__input_type_title"
-                id="title"
-                required
-                minlength="1"
-                maxlength="30"
-              />
-              <span className="title-error form__input-error"></span>
-              <input
-                type="url"
-                name="image-link"
-                placeholder=" Image link"
-                className="form__input form__input_type_image-link"
-                id="image-link"
-                required
-              />
-              <span className="image-link-error form__input-error"></span>
-              <button
-                type="submit"
-                className="form__save-btn form__save-btn_disabled"
-                disabled
-              >
-                Create
-              </button>
-            </fieldset>
-          </form>
-        </div>
+  return (
+    <div
+      className={
+        props.isOpen
+          ? `popup-box popup-box_${props.name} popup-box_opened`
+          : `popup-box popup-box_${props.name}`
+      }
+    >
+      <div className="popup-box__container">
+        <h2 className="popup-box__edit-profile">{props.title}</h2>
+        <button
+          className="popup-box__close-btn"
+          type="button"
+          onClick={props.onClose}
+        ></button>
+        <form
+          name={`${props.name}-form`}
+          className={`form form-${props.name}`}
+          onSubmit={submitHandler}
+        >
+          <fieldset className="form__set">
+            {props.children}
+            <button
+              type="submit"
+              className={`form__save-btn form__submit ${props.mod}`}
+            >
+              {props.buttonText}
+            </button>
+          </fieldset>
+        </form>
       </div>
-      </>
+    </div>
+  );
 }
+
+export default PopupWithForm;
