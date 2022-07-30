@@ -5,18 +5,16 @@ import React from "react";
 function ImagePopup(props) {
   return (
     <div
-      className={
-        props.isOpen
-          ? `popup-box popup-box_image popup-box_opened`
-          : `popup-box popup-box_image`
-      }
+      className={`popup-box popup-box_image ${
+        props.isOpen ? "popup-box_opened" : ""
+      }`}
     >
       <div className="popup-box__image-container">
         <button
           className="popup-box__close-btn"
           type="button"
           onClick={props.onClose}
-        ></button>
+        />
         <img
           className="popup-box__image"
           src={props.selectedCard.link}

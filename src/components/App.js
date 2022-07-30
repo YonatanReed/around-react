@@ -21,7 +21,6 @@ function App() {
     React.useState(false);
 
   function handleEditProfileClick() {
-    console.log("handleEditProfileClick() was called");
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
 
@@ -72,7 +71,7 @@ function App() {
           minLength="2"
           maxLength="40"
         />
-        <span className="form__input-error name-error"></span>
+        <span className="form__input-error name-error" />
         <input
           type="text"
           className="form__input form__input_type_job"
@@ -83,7 +82,7 @@ function App() {
           minLength="2"
           maxLength="200"
         />
-        <span className="form__input-error job-error"></span>
+        <span className="form__input-error job-error" />
       </PopupWithForm>
       <PopupWithForm
         title="New place"
@@ -102,7 +101,7 @@ function App() {
           minLength="1"
           maxLength="300"
         />
-        <span className="form__input-error title-error"></span>
+        <span className="form__input-error title-error" />
         <input
           type="url"
           className="form__input form__input_type_image-link"
@@ -111,7 +110,7 @@ function App() {
           placeholder=" Image link"
           required
         />
-        <span className="form__input-error image-link-error"></span>
+        <span className="form__input-error image-link-error" />
       </PopupWithForm>
       <PopupWithForm
         title="Change profile picture"
@@ -129,7 +128,7 @@ function App() {
           placeholder="profile picture link"
           required
         />
-        <span className="form__input-error avatar-error"></span>
+        <span className="form__input-error avatar-error" />
       </PopupWithForm>
       <PopupWithForm
         title="Are you sure?"
@@ -137,7 +136,7 @@ function App() {
         buttonText="Yes"
         mod="form__save-btn"
         isOpen={isDeleteCardPopupOpen}
-      ></PopupWithForm>
+      />
       <ImagePopup
         selectedCard={selectedCard}
         isOpen={isImagePopupOpen}

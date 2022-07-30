@@ -1,11 +1,14 @@
 import React from "react";
 
-// v - updated
-// change popup-box__edit-profile later
-// className="form popup__form" changed to className={`form form-${props.name}`}
-// className={`form__save-btn form__submit ${props.mod}`}
-
-function PopupWithForm(props) {
+function PopupWithForm({
+  title,
+  buttonText,
+  children,
+  mod,
+  name,
+  onClose,
+  isOpen,
+}) {
   const submitHandler = (e) => {
     e.preventDefault();
   };
@@ -13,30 +16,30 @@ function PopupWithForm(props) {
   return (
     <div
       className={
-        props.isOpen
-          ? `popup-box popup-box_${props.name} popup-box_opened`
-          : `popup-box popup-box_${props.name}`
+        isOpen
+          ? `popup-box popup-box_${name} popup-box_opened`
+          : `popup-box popup-box_${name}`
       }
     >
       <div className="popup-box__container">
-        <h2 className="popup-box__edit-profile">{props.title}</h2>
+        <h2 className="popup-box__edit-profile">{title}</h2>
         <button
           className="popup-box__close-btn"
           type="button"
-          onClick={props.onClose}
-        ></button>
+          onClick={onClose}
+        />
         <form
-          name={`${props.name}-form`}
-          className={`form form-${props.name}`}
+          name={`${name}-form`}
+          className={`form form-${name}`}
           onSubmit={submitHandler}
         >
           <fieldset className="form__set">
-            {props.children}
+            {children}
             <button
               type="submit"
-              className={`form__save-btn form__submit ${props.mod}`}
+              className={`form__save-btn form__submit ${mod}`}
             >
-              {props.buttonText}
+              {buttonText}
             </button>
           </fieldset>
         </form>

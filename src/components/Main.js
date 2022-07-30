@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; 
 import { api } from "../utils/Api";
 import Card from "./Card";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-  const [userId, setUserId] = React.useState("");
+  const [userName, setUserName] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
+  const [userId, setUserId] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
         setUserName(userData.name);
@@ -33,7 +33,7 @@ function Main(props) {
           <span
             onClick={props.handleEditAvatarClick}
             className="profile__edit-picture"
-          ></span>
+          />
         </div>
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
@@ -41,28 +41,25 @@ function Main(props) {
             onClick={props.handleEditProfileClick}
             className="profile__edit-btn"
             type="button"
-          ></button>
+          />
           <p className="profile__job">{userDescription}</p>
         </div>
         <button
           onClick={props.handleAddPlaceClick}
           className="profile__add-btn"
           type="button"
-        ></button>
+        />
       </section>
       <section>
         <div className="elements">
-          {cards.map((card) => {
-            return (
-              <div key={card._id} className="element">
+          {cards.map((card) => <div key={card._id} className="element">
                 <Card
                   card={card}
                   userId={userId}
                   onCardClick={props.onCardClick}
                 />
-              </div>
-            );
-          })}
+              </div>) }
+          
         </div>
       </section>
     </main>
