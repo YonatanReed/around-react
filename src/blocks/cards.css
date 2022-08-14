@@ -1,4 +1,4 @@
-.elements {
+.cards {
   max-width: 880px;
   display: flex;
   flex-wrap: wrap;
@@ -8,14 +8,13 @@
 }
 
 @media screen and (max-width: 890px) {
-  .elements {
+  .cards {
     max-width: 581px;
   }
 }
 
 @media screen and (max-width: 590px) {
-  .elements {
+  .cards {
     max-width: 282px;
   }
 }
-

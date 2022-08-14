@@ -1,10 +1,10 @@
-.element {
+.card {
   background-color: #fff;
   border-radius: 10px;
   position: relative;
 }
 
-.element__image {
+.card__image {
   display: block;
   width: 282px;
   height: 282px;
@@ -12,25 +12,18 @@
   cursor: pointer;
 }
 
-.popup-box__image {
-  display: block;
-  max-width: 75vw;
-  max-height: 75vh;
-  margin: 0;
-}
-
 .caption {
   margin: 10px 0 0;
 }
 
-.element__info {
+.card__info {
   max-width: 246px;
   display: flex;
   justify-content: space-between;
   margin: 25px 15px 31px 21px;
 }
 
-.element__paragraph {
+.card__title {
   margin: 0;
   color: #000;
   font-weight: 900;
@@ -41,7 +34,7 @@
   overflow: hidden;
 }
 
-.element__like {
+.card__like-btn {
   width: 21px;
   height: 19px;
   background-image: url(../images/like-btn.svg);
@@ -52,27 +45,27 @@
   background-color: transparent;
 }
 
-.element__like_number{
-display: block;
-color: #000;
-width: 9px;
-height: 13px;
-text-align: center;
-font-size: 13px;
-margin: 3px auto;
+.card__like-btn_active {
+  background-image: url(../images/like-active.svg);
 }
 
-.element__like:hover {
+.card__like-btn:hover {
   cursor: pointer;
   color: #000;
   opacity: 0.5;
 }
 
-.element__like_active {
-  background-image: url(../images/like-active.svg);
+.card__like-counter {
+  display: block;
+  color: #000;
+  width: 9px;
+  height: 13px;
+  text-align: center;
+  font-size: 13px;
+  margin: 3px auto;
 }
 
-.element__delete-icon {
+.card__delete-btn {
   width: 18px;
   height: 19.3px;
   border: none;
@@ -83,7 +76,7 @@ margin: 3px auto;
   top: 18px;
 }
 
-.element__delete-icon:hover {
+.card__delete-btn:hover {
   cursor: pointer;
   opacity: 0.6;
 }

@@ -72,7 +72,12 @@ class Api {
       headers: this._headers,
     }).then(this._processResponse);
   }
+
+  changeLikeCardStatus(id, isLiked) {
+    return isLiked ? this.likeCard(id) : this.unLikeCard(id);
+  }
 }
+
 
 export const api = new Api({
   baseUrl: `https://around.nomoreparties.co/v1/cohort-3-en`,

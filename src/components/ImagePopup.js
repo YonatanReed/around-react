@@ -1,26 +1,16 @@
 import React from "react";
 
-// v - updated
-// maybe delete popup-box__container
-function ImagePopup(props) {
+function ImagePopup({ isOpen, onClose, selectedCard }) {
   return (
-    <div
-      className={`popup-box popup-box_image ${
-        props.isOpen ? "popup-box_opened" : ""
-      }`}
-    >
-      <div className="popup-box__image-container">
-        <button
-          className="popup-box__close-btn"
-          type="button"
-          onClick={props.onClose}
-        />
+    <div className={`popup popup_type_image ${isOpen ? "popup_opened" : ""}`}>
+      <div className="popup__image-container">
+        <button className="popup__close-btn" type="button" onClick={onClose} />
         <img
-          className="popup-box__image"
-          src={props.selectedCard.link}
-          alt={props.selectedCard.name}
+          className="popup__image"
+          src={selectedCard.link}
+          alt={selectedCard.name}
         />
-        <p className="popup-box__caption">{props.selectedCard.name}</p>
+        <p className="popup__caption">{selectedCard.name}</p>
       </div>
     </div>
   );

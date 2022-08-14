@@ -8,32 +8,25 @@ function PopupWithForm({
   name,
   onClose,
   isOpen,
+  onSubmit,
 }) {
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <div
       className={
         isOpen
-          ? `popup-box popup-box_${name} popup-box_opened`
-          : `popup-box popup-box_${name}`
+          ? `popup popup_type_${name} popup_opened`
+          : `popup popup_type_${name}`
       }
     >
-      <div className="popup-box__container">
-        <h2 className="popup-box__edit-profile">{title}</h2>
-        <button
-          className="popup-box__close-btn"
-          type="button"
-          onClick={onClose}
-        />
+      <div className="popup__container">
+        <h2 className="popup__title">{title}</h2>
+        <button className="popup__close-btn" type="button" onClick={onClose} />
         <form
           name={`${name}-form`}
-          className={`form form-${name}`}
-          onSubmit={submitHandler}
+          className={`form form_type_${name}`}
+          onSubmit={onSubmit}
         >
-          <fieldset className="form__set">
+          <fieldset className="form__field-set">
             {children}
             <button
               type="submit"

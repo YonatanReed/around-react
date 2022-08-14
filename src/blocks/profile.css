@@ -13,9 +13,11 @@
 .profile__avatar {
   max-width: 120px;
   border-radius: 50%;
+  height: 120px;
+  width: 120px;
 }
 
-.profile__edit-picture {
+.profile__avatar-container {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -28,7 +30,7 @@
   transition: opacity 1s ease-out;
 }
 
-.profile__edit-picture:hover {
+.profile__avatar-container:hover {
   opacity: 1;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.8);
@@ -58,7 +60,7 @@
   overflow: hidden;
 }
 
-.profile__job {
+.profile__about {
   width: 100%;
   font-size: 18px;
   line-height: 1.22;
