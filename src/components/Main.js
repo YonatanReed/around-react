@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -11,7 +11,7 @@ function Main({
   onCardLike,
   onCardDelete,
 }) {
-  const { avatar, name, about } = React.useContext(CurrentUserContext);
+  const { avatar, name, about } = useContext(CurrentUserContext);
 
   return (
     <main className="main">
@@ -40,14 +40,13 @@ function Main({
       </section>
       <section className="cards">
         {cards.map((card) => (
-          <div key={card._id} className="card">
-            <Card
-              card={card}
-              onCardClick={onCardClick}
-              onCardLike={onCardLike}
-              onCardDelete={onCardDelete}
-            />
-          </div>
+          <Card
+            key={card._id}
+            card={card}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
+          />
         ))}
       </section>
     </main>

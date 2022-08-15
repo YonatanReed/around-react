@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
@@ -6,10 +6,16 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
   const [link, setLink] = useState("");
   const handleNameChange = (e) => setName(e.target.value);
   const handleLinkChange = (e) => setLink(e.target.value);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddPlaceSubmit({ name, link });
   };
+
+  useEffect(() => {
+    setName("");
+    setLink("");
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -30,6 +36,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
         minLength="1"
         maxLength="300"
         onChange={handleNameChange}
+        value={name}
       />
       <span className="form__input-error title-error" />
       <input
@@ -40,6 +47,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
         placeholder=" Image link"
         required
         onChange={handleLinkChange}
+        value={link}
       />
       <span className="form__input-error image-link-error" />
     </PopupWithForm>

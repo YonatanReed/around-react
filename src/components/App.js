@@ -15,7 +15,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({
@@ -35,13 +35,16 @@ function App() {
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((user) => user._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) =>
-        state.map((currentCard) =>
-          currentCard._id === card._id ? newCard : currentCard
-        )
-      );
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch(console.log);
   };
 
   const handleCardDelete = (card) => {
@@ -73,9 +76,11 @@ function App() {
   const handleUpdateUser = ({ name, about }) => {
     api
       .updateUserInfo(name, about)
-      .then((user) => setCurrentUser(user))
+      .then((user) => {
+        setCurrentUser(user);
+        closeAllPopups();
+      })
       .catch(console.log);
-    closeAllPopups();
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
@@ -106,55 +111,65 @@ function App() {
     setIsDeleteCardPopupOpen(false);
   };
 
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeAllPopups();
+      }
+    };
+
+    document.addEventListener("keydown", closeByEscape);
+
+    return () => document.removeEventListener("keydown", closeByEscape);
+  }, []);
+
   return (
-    <div>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Header />
 
-        <Main
-          handleEditProfileClick={handleEditProfileClick}
-          handleEditAvatarClick={handleEditAvatarClick}
-          handleAddPlaceClick={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+      <Main
+        handleEditProfileClick={handleEditProfileClick}
+        handleEditAvatarClick={handleEditAvatarClick}
+        handleAddPlaceClick={handleAddPlaceClick}
+        onCardClick={handleCardClick}
+        cards={cards}
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
+      />
 
-        <Footer />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
+      <Footer />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+      />
 
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlaceSubmit={handleAddPlaceSubmit}
-        />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlaceSubmit={handleAddPlaceSubmit}
+      />
 
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
 
-        <PopupWithForm
-          title="Are you sure?"
-          name="delete-card"
-          buttonText="Yes"
-          mod="form__save-btn"
-          isOpen={isDeleteCardPopupOpen}
-        />
+      <PopupWithForm
+        title="Are you sure?"
+        name="delete-card"
+        buttonText="Yes"
+        mod="form__save-btn"
+        isOpen={isDeleteCardPopupOpen}
+      />
 
-        <ImagePopup
-          selectedCard={selectedCard}
-          isOpen={isImagePopupOpen}
-          onClose={closeAllPopups}
-        />
-      </CurrentUserContext.Provider>
-    </div>
+      <ImagePopup
+        selectedCard={selectedCard}
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
+      />
+    </CurrentUserContext.Provider>
   );
 }
 
